@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'login.dart';
+import './screens/login.dart';
+import './screens/home.dart';
+import './screens/collection_overview.dart'; 
 
 void main() => runApp(MyApp());
 
@@ -10,23 +12,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'DupeIt',
       theme: ThemeData(
-        primarySwatch: Colors.purple,
+        primarySwatch: Colors.orange,
       ),
-      home: Login(),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Dupe It'),
-      ),
-      body: Center(
-        child: Text('Default Collection Screen'),
-      ),
+      home: MyHomePage(),
     );
   }
 }
