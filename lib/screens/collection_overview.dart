@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/product.dart';
 import '../widgets/product_item.dart'; 
+import '../widgets/appbar.dart'; 
 
 class CollectionOverviewScreen extends StatelessWidget {
   final List<Product> sample = [
@@ -47,7 +48,9 @@ class CollectionOverviewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('DupeIt')),
+        appBar: appBarBase(
+        title:'My Collection'
+    ),
         body: GridView.builder(
           padding: const EdgeInsets.all(10),
           itemCount: sample.length,
