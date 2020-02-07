@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import './login.dart';
-import './signup.dart';
+import './Login.dart';
+import './Signup.dart';
 import '../widgets/appbar.dart'; 
 class MyHomePage extends StatelessWidget {
   void toSignUp(context) => Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => SignUp()));

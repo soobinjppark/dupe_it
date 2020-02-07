@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import './collection_overview.dart';
-import '../widgets/appbar.dart'; 
+import './CollectionOverviewScreen.dart';
+import '../widgets/appbar.dart';
+import '../widgets/BottomNavBar.dart';
 class Login extends StatefulWidget {
 
   @override
@@ -16,7 +17,7 @@ class _LoginState extends State<Login> {
     final form = formKey.currentState;
     form.save();
     if (form.validate()) {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => CollectionOverviewScreen()));
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => BottomNavBar()));
     }
   } 
 
