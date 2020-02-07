@@ -11,7 +11,7 @@ class Product {
   Product(
       {@required this.name,
       @required this.productType,
-      this.brand,
+      this.brand, 
       @required this.type,
       @required this.finish,
       @required this.imageURL});

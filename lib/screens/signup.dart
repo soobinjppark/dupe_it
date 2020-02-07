@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import './collection_overview.dart';
-
+import '../widgets/appbar.dart'; 
 class SignUp extends StatefulWidget {
 
   @override
@@ -31,9 +31,9 @@ class _SignUpState extends State<SignUp> {
 
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(
-        title: new Text('DupeIt', style: TextStyle(color: Colors.white)),  
-      ),
+      appBar: appBarBase(
+        title:'Sign Up'
+    ),
       body: new Container(
         padding: EdgeInsets.all(30.0),
         child: new Form(

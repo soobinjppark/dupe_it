@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import './collection_overview.dart';
-
+import '../widgets/appbar.dart'; 
 class Login extends StatefulWidget {
 
   @override
@@ -22,9 +22,12 @@ class _LoginState extends State<Login> {
 
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(
-        title: new Text('DupeIt', style: TextStyle(color: Colors.white)),  
-      ),
+      appBar: appBarBase(
+        title:'Login'
+    ),
+      // appBar: new AppBar(
+      //   title: new Text('DupeIt', style: TextStyle(color: Colors.white)),  
+      // ),
       body: new Container(
         padding: EdgeInsets.all(30.0),
         child: new Form(

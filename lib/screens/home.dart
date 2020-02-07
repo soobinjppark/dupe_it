@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import './login.dart';
 import './signup.dart';
-
+import '../widgets/appbar.dart'; 
 class MyHomePage extends StatelessWidget {
   void toSignUp(context) => Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => SignUp()));
   void toLogin(context) => Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => Login()));
@@ -15,9 +15,9 @@ class MyHomePage extends StatelessWidget {
         primarySwatch: Colors.orange
       ),
       home: Scaffold(
-        appBar: AppBar(
-          title: Text('DupeIt'),
-        ),
+        appBar: appBarBase(
+        title:'DupeIt'
+    ),
         body: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
