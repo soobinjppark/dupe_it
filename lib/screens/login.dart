@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import './collection_overview.dart';
-import '../widgets/appbar.dart'; 
+import './CollectionOverviewScreen.dart';
+import '../widgets/appbar.dart';
+import '../widgets/BottomNavBar.dart';
 class Login extends StatefulWidget {
 
   @override
@@ -16,9 +17,14 @@ class _LoginState extends State<Login> {
     final form = formKey.currentState;
     form.save();
     if (form.validate()) {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => CollectionOverviewScreen()));
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => BottomNavBar()));
     }
   } 
+
+  String validEmail(String value) {
+    bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value);
+    return !emailValid ? 'Please enter a valid email' : null;
+  }
 
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -39,7 +45,7 @@ class _LoginState extends State<Login> {
                   icon: const Icon(Icons.email),
                   labelText: 'Email',
                 ),
-                validator: (value) => value.isEmpty ? 'Please enter your email' : null,
+                validator: (value) => validEmail(value),
                 onSaved: (value) => _email = value,
               ),
               new TextFormField(
