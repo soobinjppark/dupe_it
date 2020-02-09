@@ -12,23 +12,36 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
   
     return Container(
-      height: 100, 
-      width: 50, 
+      height: 250, 
+      width: 150, 
       
       child: Card(
-      semanticContainer: true,
-      // clipBehavior: Clip.antiAliasWithSaveLayer,
-      child: Image.network(
-        imageURL, fit: BoxFit.fill
+        semanticContainer: true,
+        child: Container(
+          decoration: BoxDecoration(
+            image: new DecorationImage(
+              image: new NetworkImage(imageURL),
+              fit: BoxFit.fill,
+              alignment: Alignment.bottomLeft
+            ),
+            borderRadius: new BorderRadius.circular(20.0)
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget> [
+              SizedBox(height: 180),
+              Text("  " + name, textAlign: TextAlign.left, style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 14.0)),
+              Text("  " + finish, textAlign: TextAlign.left, style: TextStyle(color: Colors.white, fontSize: 13.0)),
+            ]
+          ), 
+        ),
+        shape: new RoundedRectangleBorder(
+          borderRadius: new BorderRadius.circular(20.0)
+        ),
+        elevation: 5,
+        margin: EdgeInsets.all(10) 
       ),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-      elevation: 5,
-      margin: EdgeInsets.all(10) 
-    )
+      
     ); 
-    // return GridTile(
-    //   child: Image.network(imageURL,  fit: BoxFit.cover),
-    //   footer: GridTileBar(title: Text(name, textAlign: TextAlign.left, style: TextStyle(fontWeight: FontWeight.bold))), 
-    // );
   }
 }

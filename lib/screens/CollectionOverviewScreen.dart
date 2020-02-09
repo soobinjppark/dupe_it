@@ -57,8 +57,8 @@ class CollectionOverviewScreen extends StatelessWidget {
           itemBuilder: (ctx, i) => ProductItem(name: sample[i].name, finish: sample[i].finish, imageURL: sample[i].imageURL),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              childAspectRatio: 3 / 2,
-              crossAxisSpacing: 10,
+              childAspectRatio: 0.8,
+              crossAxisSpacing: 0,
               mainAxisSpacing: 10),
         ));
   }
