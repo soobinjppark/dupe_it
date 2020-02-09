@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import './product.dart';
+import './Product.dart';
 
 class Dupe {
   final Product productComp;

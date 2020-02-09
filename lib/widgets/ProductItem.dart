@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 
 
 class ProductItem extends StatelessWidget {
-   final String name; 
-    final String finish; 
-    final String imageURL; 
+  final String name; 
+  final String finish; 
+  final String imageURL; 
 
-    ProductItem(this.name, this.finish, this.imageURL); 
+  ProductItem({this.name, this.finish, this.imageURL}); 
+
   @override
   Widget build(BuildContext context) {
   
