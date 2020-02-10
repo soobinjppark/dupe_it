@@ -13,8 +13,8 @@ class DupeItem extends StatelessWidget {
     final List<ProductItem> output = [myProduct, dupeProduct]; 
     return (
         new Container(
-          height: 300,
-          width: 300,
+          height: 500,
+          width: 500,
           child: IntrinsicHeight(
             child: IntrinsicWidth(
               child: new Row(

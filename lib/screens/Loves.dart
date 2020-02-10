@@ -16,7 +16,7 @@ class Loves extends StatelessWidget {
         brand: 'Gucci',
         type: 'Bullet', 
         finish: 'Satin', 
-        imageURL: 'https://i.imgur.com/yVD7d0v.jpg',
+        imageURL: 'https://i.imgur.com/tfwEIQW.jpg',
       ), 
       productItem: Product(
         name: 'Mangrove', 
@@ -24,29 +24,10 @@ class Loves extends StatelessWidget {
         brand: 'MAC', 
         type: 'Bullet', 
         finish: 'Satin', 
-        imageURL: 'https://i.imgur.com/yVD7d0v.jpg'
+        imageURL: 'https://i.imgur.com/AmBdIDH.png'
       ),
       percent: 85  
-    ), 
-    Dupe(
-      productComp: Product(
-        name: 'Sup World', 
-        productType: 'Lipstick',
-        brand: 'Gucci',
-        type: 'Bullet', 
-        finish: 'Satin', 
-        imageURL: 'https://i.imgur.com/yVD7d0v.jpg',
-      ), 
-      productItem: Product(
-        name: 'HEllo there', 
-        productType: 'Lipstick', 
-        brand: 'MAC', 
-        type: 'Bullet', 
-        finish: 'Satin', 
-        imageURL: 'https://i.imgur.com/yVD7d0v.jpg'
-      ),
-      percent: 85  
-    ),
+    )
   ]; 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +36,7 @@ class Loves extends StatelessWidget {
         title: 'Loved Dupes'
       ),
       body: ListView.builder(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(10),
         scrollDirection: Axis.vertical,
         itemCount: sample.length,
         itemBuilder: (context, index) => DupeItem(myProduct: ProductItem(name: sample[index].productComp.name, finish: sample[index].productComp.finish, imageURL: sample[index].productComp.imageURL), 
