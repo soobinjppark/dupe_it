@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../screens/CollectionOverviewScreen.dart';
 import '../screens/Loves.dart';
+import '../screens/Community.dart';
 
 class BottomNavBar extends StatefulWidget {
   @override
@@ -14,7 +15,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     CollectionOverviewScreen(),
     Loves(),
     CollectionOverviewScreen(),
-    CollectionOverviewScreen(),
+    Community(),
     CollectionOverviewScreen()
   ];
 
