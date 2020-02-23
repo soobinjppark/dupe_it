@@ -1,0 +1,36 @@
+import 'package:dupe_it/services/AbstractAuth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:dbcrypt/dbcrypt.dart';
+
+class Auth implements AbstractAuth {
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+  Future<String> signIn(String email, String password) async {
+    AuthResult result = await _firebaseAuth.signInWithEmailAndPassword(
+        email: email, password: password);
+    FirebaseUser user = result.user;
+    print(user.uid);
+    return user.uid;
+  }
+
+  Future<String> signUp(String username, String email, String password) async {
+    AuthResult result = await _firebaseAuth.createUserWithEmailAndPassword(
+        email: email, password: password);
+    FirebaseUser user = result.user;
+    return user.uid;
+  }
+
+  Future<FirebaseUser> getCurrentUser() async {
+    FirebaseUser user = await _firebaseAuth.currentUser();
+    return user;
+  }
+
+  Future<void> emailVerification() async {
+    FirebaseUser user = await _firebaseAuth.currentUser();
+    user.sendEmailVerification();
+  }
+
+  Future<void> signOut() {
+    return _firebaseAuth.signOut();
+  }
+}

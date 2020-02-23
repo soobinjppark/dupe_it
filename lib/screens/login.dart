@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import './CollectionOverviewScreen.dart';
 import '../widgets/appbar.dart';
 import '../widgets/BottomNavBar.dart';
-class Login extends StatefulWidget {
+import 'package:dbcrypt/dbcrypt.dart';
+import '../services/Auth.dart';
 
+class Login extends StatefulWidget {
+  Login({this.auth});
+  final Auth auth;
+  
   @override
   State<StatefulWidget> createState() => new _LoginState();
 }
@@ -20,6 +25,10 @@ class _LoginState extends State<Login> {
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => BottomNavBar()));
     }
   } 
+
+  bool checkPassword(String value) {
+    return new DBCrypt().checkpw(value, 'TODO');
+  }
 
   String validEmail(String value) {
     bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value);
@@ -46,7 +55,7 @@ class _LoginState extends State<Login> {
                   labelText: 'Email',
                 ),
                 validator: (value) => validEmail(value),
-                onSaved: (value) => _email = value,
+                onSaved: (value) => _email = value.trim(),
               ),
               new TextFormField(
                 decoration: new InputDecoration(
@@ -54,7 +63,7 @@ class _LoginState extends State<Login> {
                   labelText: 'Password'
                 ),
                 validator: (value) => value.isEmpty ? 'Please enter your password' : null,
-                onSaved: (value) => _password = value,
+                onSaved: (value) => _password = value.trim(),
               ),
               Padding (
                 padding: const EdgeInsets.all(20),

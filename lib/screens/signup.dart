@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import './CollectionOverviewScreen.dart';
 import '../widgets/appbar.dart'; 
 import '../widgets/BottomNavBar.dart';
+import '../services/Auth.dart';
 
 class SignUp extends StatefulWidget {
-
+  SignUp({this.auth});
+  final Auth auth;
+  
   @override
   State<StatefulWidget> createState() => new _SignUpState();
 }
@@ -48,7 +51,7 @@ class _SignUpState extends State<SignUp> {
                   labelText: 'Username'
                 ),
                 validator: (value) => value.isEmpty ? 'Please enter your username' : null,
-                onSaved: (value) => _username = value,
+                onSaved: (value) => _username = value.trim(),
               ),
               new TextFormField(
                 decoration: new InputDecoration(
@@ -56,7 +59,7 @@ class _SignUpState extends State<SignUp> {
                   labelText: 'Email',
                 ),
                 validator: (value) => validEmail(value),
-                onSaved: (value) => _email = value,
+                onSaved: (value) => _email = value.trim(),
               ),
               new TextFormField(
                 decoration: new InputDecoration(
