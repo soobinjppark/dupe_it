@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-
+import '../screens/CameraDupe.dart';
 class ProductItem extends StatelessWidget {
   final String name; 
   final String finish; 

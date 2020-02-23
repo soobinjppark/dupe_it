@@ -2,8 +2,18 @@ import 'package:flutter/material.dart';
 import '../models/Product.dart';
 import '../widgets/ProductItem.dart'; 
 import '../widgets/appbar.dart'; 
+import '../providers/ProductList.dart'; 
+import 'dart:io'; 
+import 'package:provider/provider.dart'; 
 
-class CollectionOverviewScreen extends StatelessWidget {
+
+@override
+class CollectionOverviewScreen extends StatefulWidget {
+  @override
+  _CollectionOverviewScreenState createState() => _CollectionOverviewScreenState();
+}
+
+class _CollectionOverviewScreenState extends State<CollectionOverviewScreen> {
   final List<Product> sample = [
     Product(
       name: 'Dried Apple Blossom',
@@ -45,6 +55,19 @@ class CollectionOverviewScreen extends StatelessWidget {
         finish: 'matte',
         imageURL: 'https://i.imgur.com/3VQrsWi.jpg')
   ];
+  File _pickedImage; 
+  final _titleController = TextEditingController(); 
+  void _selectImage(File pickedImage) {
+    _pickedImage = pickedImage; 
+  }
+
+  void _saveProduct() {
+    if (_titleController.text.isEmpty|| _pickedImage == null) 
+      return; 
+    Provider.of<ProductList>(context, listen: false).addProduct(_titleController.text, _pickedImage); 
+    Navigator.of(context).pop(); 
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(

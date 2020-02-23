@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../screens/CollectionOverviewScreen.dart';
 import '../screens/Loves.dart';
 import '../screens/Community.dart';
-import '../screens/Camera.dart'; 
+import '../screens/CameraDupe.dart'; 
 
 class BottomNavBar extends StatefulWidget {
   @override
@@ -15,7 +15,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   final List<Widget> _children = [
     CollectionOverviewScreen(),
     Loves(),
-    Camera(),
+    CameraDupe(null),
     Community(),
     CollectionOverviewScreen()
   ];
