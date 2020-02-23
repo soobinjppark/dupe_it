@@ -28,6 +28,10 @@ dependencies:
   dbcrypt: ^1.0.0
   camera: 
   image_picker: 
+  path_provider: ^1.6.1
+  provider: ^4.0.4
+  path: ^1.6.4
+  palette_generator: ^0.2.0
   font_awesome_flutter: ^8.5.0
 
 dev_dependencies:

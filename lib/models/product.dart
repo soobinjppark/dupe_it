@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-
+import 'dart:io'; 
 class Product {
   final String name;
   final String productType;
@@ -7,6 +7,7 @@ class Product {
   final String type;
   final String finish;
   final String imageURL;
+  final File imageFile; 
 
   Product(
       {@required this.name,
@@ -14,5 +15,6 @@ class Product {
       this.brand,
       @required this.type,
       @required this.finish,
-      @required this.imageURL});
+      this.imageURL, 
+      this.imageFile,});
 }
