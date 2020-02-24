@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import './CollectionOverviewScreen.dart';
 import '../widgets/appbar.dart'; 
 import '../widgets/BottomNavBar.dart';
 import '../services/Auth.dart';
 
 class SignUp extends StatefulWidget {
-  SignUp({this.auth});
+  SignUp({this.auth, this.loginCallback});
   final Auth auth;
+  final VoidCallback loginCallback;
   
   @override
   State<StatefulWidget> createState() => new _SignUpState();
@@ -17,21 +17,73 @@ class _SignUpState extends State<SignUp> {
   String _email;
   String _password;
   String _passwordCheck;
+  String _errorMessage;
   bool _obscureText = true;
+
+  @override
+  void initState() {
+    _errorMessage = "";
+    super.initState();
+  }
 
   final formKey = new GlobalKey<FormState>();
 
-  void validateSignUp(BuildContext context) {
+  bool validateSignUp() {
     final form = formKey.currentState;
-    form.save();
     if (form.validate()) {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => BottomNavBar()));
+      form.save();
+      return true;
+    }
+    return false;
+  }
+
+  void validateAndSubmit() async {
+    if (validateSignUp()) {
+      String userID = "";
+      try {
+          userID = await widget.auth.signUp(_username, _email, _password);
+          print('Signed up: $userID');
+          if (userID != null) {
+            widget.loginCallback();
+            Navigator.pop(context);
+          }
+      } catch (e) {
+        print(e.message);
+        setState(() {
+          _errorMessage = e.message;
+        });
+        _showDialog();
+      }
     }
   }
+
 
   String validEmail(String value) {
     bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value);
     return !emailValid ? 'Please enter a valid email' : null;
+  }
+
+    void _showDialog() {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Signup Failed"),
+          content: new Text(_errorMessage),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Widget build(BuildContext context) {
@@ -83,7 +135,7 @@ class _SignUpState extends State<SignUp> {
                 padding: const EdgeInsets.all(20),
                 child: new OutlineButton(
                   child: new Text('Sign Up'),
-                  onPressed: () => validateSignUp(context),
+                  onPressed: () => validateAndSubmit(),
                   shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(20.0)),
                   borderSide: BorderSide(color: Colors.orange),
                   textColor: Colors.orange,

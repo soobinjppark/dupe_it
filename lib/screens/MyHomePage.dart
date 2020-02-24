@@ -2,10 +2,21 @@ import 'package:flutter/material.dart';
 import './Login.dart';
 import './Signup.dart';
 import '../widgets/appbar.dart'; 
-class MyHomePage extends StatelessWidget {
-  void toSignUp(context) => Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => SignUp()));
-  void toLogin(context) => Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => Login()));
+import 'package:dupe_it/services/Auth.dart';
 
+class MyHomePage extends StatefulWidget {
+  MyHomePage({this.auth, this.loginCallback});
+
+  final Auth auth;
+  final VoidCallback loginCallback;
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  void toSignUp(context) => Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => SignUp(auth: widget.auth, loginCallback: widget.loginCallback )));
+  void toLogin(context) => Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => Login(auth: widget.auth, loginCallback: widget.loginCallback)));
 
   @override
   Widget build(BuildContext context) {

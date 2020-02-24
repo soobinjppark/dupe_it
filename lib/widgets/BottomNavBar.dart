@@ -4,21 +4,29 @@ import '../screens/CollectionOverviewScreen.dart';
 import '../screens/Loves.dart';
 import '../screens/Community.dart';
 import '../screens/CameraDupe.dart'; 
+import 'package:dupe_it/screens/Settings.dart';
+import 'package:dupe_it/services/Auth.dart';
 
 class BottomNavBar extends StatefulWidget {
+  BottomNavBar({this.auth, this.logoutCallback});
+  final Auth auth;
+  final VoidCallback logoutCallback;
+
   @override
   _BottomNavBarState createState() => _BottomNavBarState();
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
+  
   int _currentIndex = 0;
-  final List<Widget> _children = [
+  List<Widget> _children() => [
     CollectionOverviewScreen(),
     Loves(),
     CameraDupe(null),
     Community(),
-    CollectionOverviewScreen()
+    Settings(logoutCallback: widget.logoutCallback)
   ];
+  
 
   void onTapped(int index) {
     setState(() {
@@ -28,9 +36,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> children = _children();
     return new Scaffold(
       body: Center(
-        child: _children[_currentIndex]
+        child: children[_currentIndex]
       ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTapped,

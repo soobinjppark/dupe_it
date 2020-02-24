@@ -49,9 +49,9 @@ class _CameraDupeState extends State<CameraDupe> {
   }
   
   Future<void> _updatePaletteGenerator() async {
-    var paletteGenerator = await PaletteGenerator.fromImageProvider(
-      widget.im, maximumColorCount: 3 
-    );
+    // var paletteGenerator = await PaletteGenerator.fromImageProvider(
+    //   widget.im, maximumColorCount: 3 
+    // );
     
     setState(() {}); 
   }
@@ -60,11 +60,11 @@ class _CameraDupeState extends State<CameraDupe> {
   Widget build(BuildContext context) {
     final List<Color> swatches = <Color>[]; 
 
-    if (generator.colors.isNotEmpty) {
-      for (Color color in generator.colors) {
-        swatches.add(color); 
-      }
-    }
+    // if (generator.colors.isNotEmpty) {
+    //   for (Color color in generator.colors) {
+    //     swatches.add(color); 
+    //   }
+    // }
     return Scaffold(
         body: Center(
       child: Column(
