@@ -4,7 +4,7 @@ import '../screens/CollectionOverviewScreen.dart';
 import '../screens/Loves.dart';
 import '../screens/Community.dart';
 import '../screens/CameraDupe.dart'; 
-
+import '../screens/PaletteGenerator.dart'; 
 class BottomNavBar extends StatefulWidget {
   @override
   _BottomNavBarState createState() => _BottomNavBarState();
@@ -15,7 +15,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   final List<Widget> _children = [
     CollectionOverviewScreen(),
     Loves(),
-    CameraDupe(null),
+    MyApp(), 
     Community(),
     CollectionOverviewScreen()
   ];

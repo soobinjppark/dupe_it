@@ -9,19 +9,34 @@ import 'package:palette_generator/palette_generator.dart';
 List<CameraDescription> cameras;
 
 class CameraDupe extends StatefulWidget {
-  final Function onSelectImage; 
-  ImageProvider im; 
-
-  CameraDupe(this.onSelectImage); 
+  const CameraDupe({
+      Key key,
+      this.onSelectImage, 
+      this.imageSize, 
+      this.im
+  }): super(key : key); 
+  
+  final Function onSelectImage;
+  final Size imageSize;  
+  final ImageProvider im; 
   
   @override
-  _CameraDupeState createState() => new _CameraDupeState();
+  _CameraDupeState createState() {
+    return _CameraDupeState(); 
+  }
 }
 
 class _CameraDupeState extends State<CameraDupe> {
 
+  final GlobalKey imageKey = GlobalKey(); 
   File _storedImage;
-  PaletteGenerator generator; 
+
+  Rect region;
+  Rect dragRegion;
+  Offset startDrag;
+  Offset currentDrag;
+  PaletteGenerator paletteGenerator;
+
     void initState() {
       super.initState(); 
     _updatePaletteGenerator(); 
@@ -46,6 +61,10 @@ class _CameraDupeState extends State<CameraDupe> {
     setState(() {
       _storedImage = imageFile;
     });
+    final appDirectory = await sysPath.getApplicationDocumentsDirectory(); 
+    final fileName = path.basename(imageFile.path); //where our image is currently stored 
+    final savedImage = await imageFile.copy('${appDirectory.path}/$fileName'); //will take a bit of time 
+    widget.onSelectImage(savedImage); 
   }
   
   Future<void> _updatePaletteGenerator() async {
@@ -56,15 +75,40 @@ class _CameraDupeState extends State<CameraDupe> {
     setState(() {}); 
   }
 
+void _onPanDown(DragDownDetails details) {
+  final RenderBox box = imageKey.currentContext.findRenderObject(); 
+  final Offset localPosition = box.globalToLocal(details.globalPosition); 
+  setState(() {
+    startDrag = localPosition;
+      currentDrag = startDrag;
+      dragRegion = Rect.fromPoints(startDrag, currentDrag);
+  });
+}
+
+  void _onPanUpdate(DragUpdateDetails details) {
+    setState(() {
+      currentDrag += details.delta;
+      dragRegion = Rect.fromPoints(startDrag, currentDrag);
+    });
+  }
+
+  void _onPanCancel() {
+    setState(() {
+      dragRegion = null;
+      startDrag = null;
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     final List<Color> swatches = <Color>[]; 
 
-    if (generator.colors.isNotEmpty) {
-      for (Color color in generator.colors) {
-        swatches.add(color); 
-      }
-    }
+    // if (generator.colors.isNotEmpty) {
+    //   for (Color color in generator.colors) {
+    //     swatches.add(color); 
+    //   }
+    // }
     return Scaffold(
         body: Center(
       child: Column(
