@@ -68,9 +68,9 @@ class _CameraDupeState extends State<CameraDupe> {
   }
   
   Future<void> _updatePaletteGenerator() async {
-    var paletteGenerator = await PaletteGenerator.fromImageProvider(
-      widget.im, maximumColorCount: 3 
-    );
+    // var paletteGenerator = await PaletteGenerator.fromImageProvider(
+    //   widget.im, maximumColorCount: 3 
+    // );
     
     setState(() {}); 
   }
