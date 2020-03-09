@@ -65,6 +65,7 @@ void dispose() {
 _addItem(String name, String productType, String brand, String type, String finish, String imageURL) {
   if (name.length > 0) {
     Product product = new Product(
+      userID: widget.userID,
       name: name,
       productType: productType,
       brand: brand,
@@ -86,8 +87,6 @@ _deleteItem(String itemID, int index) {
       print("Item deleted");
     });
 } 
-
-
   // final List<Product> _collectionList = [
   //   Product(
   //     name: 'Dried Apple Blossom',
@@ -142,7 +141,41 @@ _deleteItem(String itemID, int index) {
   //   Provider.of<ProductList>(context, listen: false).addProduct(_titleController.text, _pickedImage); 
   //   Navigator.of(context).pop(); 
   // }
-  
+  showCollectionDialog(BuildContext context) async {
+    myController.clear();
+    await showDialog<String>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: new Row(
+              children: <Widget>[
+                new Expanded(
+                  child: new TextField(
+                    controller: myController,
+                    autofocus: true,
+                    decoration: new InputDecoration(
+                      labelText: 'Add new todo',
+                    ),
+                  )
+                )
+              ],
+            ),
+            actions: <Widget>[
+              new FlatButton(
+                  child: const Text('Cancel'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
+              new FlatButton(
+                  child: const Text('Save'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  })
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -152,16 +185,16 @@ _deleteItem(String itemID, int index) {
         body: GridView.builder(
           padding: const EdgeInsets.all(10),
           itemCount: _collectionList.length,
-          itemBuilder: (ctx, i) => ProductItem(name: _collectionList[i].name, finish: _collectionList[i].finish, imageURL: _collectionList[i].imageURL),
+          itemBuilder: (ctx, i) => ProductItem(name: _collectionList[i].name, finish: _collectionList[i].finish, imageURL: _collectionList[i].imageURL, index: i, deleteCallback: () => _deleteItem(_collectionList[i].key, i),),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               childAspectRatio: 0.8,
               crossAxisSpacing: 0,
-              mainAxisSpacing: 10),
+              mainAxisSpacing: 10
+            ),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            print("Hi there");
             _addItem('Nude Peach', 'Blush', '3CE', 'Powder', 'matte', 'https://i.imgur.com/yVD7d0v.jpg');
           },
           tooltip: 'Increment',

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import '../screens/CameraDupe.dart';
+
 class ProductItem extends StatelessWidget {
   final String name; 
   final String finish; 
-  final String imageURL; 
+  final String imageURL;
+  final int index;
+  VoidCallback deleteCallback;
 
-  ProductItem({this.name, this.finish, this.imageURL}); 
+  ProductItem({this.name, this.finish, this.imageURL, this.index, this.deleteCallback}); 
 
   @override
   Widget build(BuildContext context) {
@@ -13,8 +16,9 @@ class ProductItem extends StatelessWidget {
     return Container(
       height: 250, 
       width: 150, 
-      
-      child: Card(
+      child: new GestureDetector(
+        onLongPress: () => deleteCallback(),
+        child: Card(
         semanticContainer: true,
         child: Container(
           decoration: BoxDecoration(
@@ -39,8 +43,8 @@ class ProductItem extends StatelessWidget {
         ),
         elevation: 5,
         margin: EdgeInsets.all(10) 
-      ),
-      
+        ),
+      )
     ); 
   }
 }

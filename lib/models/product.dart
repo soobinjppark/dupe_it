@@ -4,6 +4,7 @@ import 'package:firebase_database/firebase_database.dart';
 
 class Product {
   String key;
+  String userID;
   String name;
   String productType;
   String brand;
@@ -13,6 +14,7 @@ class Product {
   File imageFile; 
 
   Product({
+      @required this.userID,
       @required this.name,
       @required this.productType,
       this.brand,
@@ -24,6 +26,7 @@ class Product {
 
   Product.fromSnapshot(DataSnapshot snapshot) :
     key = snapshot.key,
+    userID = snapshot.value["userID"],
     name = snapshot.value["name"],
     productType = snapshot.value["productType"],
     brand = snapshot.value["brand"],
@@ -34,6 +37,7 @@ class Product {
 
   toJSON() {
     return {
+      "userID": userID,
       "name": name,
       "productType": productType,
       "brand": brand,
