@@ -3,6 +3,7 @@ import './Login.dart';
 import './Signup.dart';
 import '../widgets/appbar.dart'; 
 import 'package:dupe_it/services/Auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({this.auth, this.loginCallback});

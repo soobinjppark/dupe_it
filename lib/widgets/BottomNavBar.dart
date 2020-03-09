@@ -4,17 +4,15 @@ import '../screens/CollectionOverviewScreen.dart';
 import '../screens/Loves.dart';
 import '../screens/Community.dart';
 import '../screens/CameraDupe.dart'; 
-<<<<<<< HEAD
 import '../screens/PaletteGenerator.dart'; 
-=======
 import 'package:dupe_it/screens/Settings.dart';
 import 'package:dupe_it/services/Auth.dart';
 
->>>>>>> 3c1476d19f772190da4847a92e13dca0a99efde3
 class BottomNavBar extends StatefulWidget {
-  BottomNavBar({this.auth, this.logoutCallback});
+  BottomNavBar({this.auth, this.logoutCallback, this.userID});
   final Auth auth;
   final VoidCallback logoutCallback;
+  final String userID;
 
   @override
   _BottomNavBarState createState() => _BottomNavBarState();
@@ -24,13 +22,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
   
   int _currentIndex = 0;
   List<Widget> _children() => [
-    CollectionOverviewScreen(),
+    CollectionOverviewScreen(userID: widget.userID),
     Loves(),
     MyApp(), 
     Community(),
     Settings(logoutCallback: widget.logoutCallback)
   ];
-  
 
   void onTapped(int index) {
     setState(() {

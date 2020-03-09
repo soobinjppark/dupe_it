@@ -70,6 +70,7 @@ class _RootPageState extends State<RootPage> {
           return BottomNavBar(
             auth: widget.auth,
             logoutCallback: logoutCallback,
+            userID: _userID
           );
         }
         break;

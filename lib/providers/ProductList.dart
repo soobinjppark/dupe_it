@@ -48,11 +48,11 @@ class ProductList with ChangeNotifier {
   List<Product> get collection {
     return [... _collection];}
 
-  void addProduct(String title, File image) {
-    final newProduct =  Product(name:title, finish: null, brand: null, type: null, productType: null, imageFile: image); 
-    _collection.add(newProduct); 
-    notifyListeners(); 
-  }
+  // void addProduct(String title, File image) {
+  //   final newProduct =  Product(name:title, finish: null, brand: null, type: null, productType: null, imageFile: image); 
+  //   _collection.add(newProduct); 
+  //   notifyListeners(); 
+  // }
 
 
 }
