@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/Product.dart';
 import '../widgets/ProductItem.dart'; 
 import '../widgets/appbar.dart'; 
-import '../providers/ProductList.dart'; 
 import 'dart:io'; 
-import 'package:provider/provider.dart'; 
 import 'package:firebase_database/firebase_database.dart';
 import 'dart:async';
 
@@ -26,7 +24,21 @@ class _CollectionOverviewScreenState extends State<CollectionOverviewScreen> {
 
   List<Product> _collectionList;
 
-  final myController = TextEditingController();
+  final nameController = TextEditingController();
+  final productTypeController = TextEditingController();
+  final brandController = TextEditingController();
+  final typeController = TextEditingController();
+  final finishController = TextEditingController();
+  final imageURLController = TextEditingController();
+
+  void clearAll() {
+    nameController.clear();
+    productTypeController.clear();
+    brandController.clear();
+    typeController.clear();
+    finishController.clear();
+    imageURLController.clear();
+  }
 
   @override
   void initState() {
@@ -79,6 +91,7 @@ _addItem(String name, String productType, String brand, String type, String fini
 }
 
 _deleteItem(String itemID, int index) {
+
   _database.reference().child("collection").child(itemID).remove()
     .then((_) {
       setState(() {
@@ -128,33 +141,94 @@ _deleteItem(String itemID, int index) {
   //       finish: 'matte',
   //       imageURL: 'https://i.imgur.com/3VQrsWi.jpg')
   // ];
-
-  File _pickedImage; 
-  final _titleController = TextEditingController(); 
-  void _selectImage(File pickedImage) {
-    _pickedImage = pickedImage; 
+  showDeletedDialog(BuildContext context, String itemID, int index) async {
+    await showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: new Row(
+            children: <Widget>[
+              new Text("Delete the selected item?")
+            ],
+          ),
+          actions: <Widget>[
+            new FlatButton(
+                  child: const Text('Yes'),
+                  onPressed: () {
+                    _deleteItem(itemID, index);
+                    Navigator.pop(context);
+                  }),
+            new FlatButton(
+                  child: const Text('No'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
+          ],
+        );
+      }
+    );
   }
 
-  // void _saveProduct() {
-  //   if (_titleController.text.isEmpty|| _pickedImage == null) 
-  //     return; 
-  //   Provider.of<ProductList>(context, listen: false).addProduct(_titleController.text, _pickedImage); 
-  //   Navigator.of(context).pop(); 
-  // }
   showCollectionDialog(BuildContext context) async {
-    myController.clear();
+    clearAll();
     await showDialog<String>(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            content: new Row(
+            content: new Column(
+              mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                new Expanded(
+                new Center(
                   child: new TextField(
-                    controller: myController,
+                    controller: nameController,
                     autofocus: true,
                     decoration: new InputDecoration(
-                      labelText: 'Add new todo',
+                      labelText: 'Name',
+                    ),
+                  )
+                ),
+                new Center(
+                  child: new TextField(
+                    controller: productTypeController,
+                    autofocus: true,
+                    decoration: new InputDecoration(
+                      labelText: 'Product Type',
+                    ),
+                  )
+                ),
+                new Center(
+                  child: new TextField(
+                    controller: brandController,
+                    autofocus: true,
+                    decoration: new InputDecoration(
+                      labelText: 'Brand',
+                    ),
+                  )
+                ),
+                new Center(
+                  child: new TextField(
+                    controller: typeController,
+                    autofocus: true,
+                    decoration: new InputDecoration(
+                      labelText: 'Type',
+                    ),
+                  )
+                ),
+                new Center(
+                  child: new TextField(
+                    controller: finishController,
+                    autofocus: true,
+                    decoration: new InputDecoration(
+                      labelText: 'Finish',
+                    ),
+                  )
+                ),
+                new Center(
+                  child: new TextField(
+                    controller: imageURLController,
+                    autofocus: true,
+                    decoration: new InputDecoration(
+                      labelText: 'Image Link',
                     ),
                   )
                 )
@@ -169,6 +243,13 @@ _deleteItem(String itemID, int index) {
               new FlatButton(
                   child: const Text('Save'),
                   onPressed: () {
+                    _addItem(
+                      nameController.text.toString(),
+                      productTypeController.text.toString(),
+                      brandController.text.toString(),
+                      typeController.text.toString(),
+                      finishController.text.toString(),
+                      imageURLController.text.toString());
                     Navigator.pop(context);
                   })
             ],
@@ -185,7 +266,7 @@ _deleteItem(String itemID, int index) {
         body: GridView.builder(
           padding: const EdgeInsets.all(10),
           itemCount: _collectionList.length,
-          itemBuilder: (ctx, i) => ProductItem(name: _collectionList[i].name, finish: _collectionList[i].finish, imageURL: _collectionList[i].imageURL, index: i, deleteCallback: () => _deleteItem(_collectionList[i].key, i),),
+          itemBuilder: (ctx, i) => ProductItem(name: _collectionList[i].name, finish: _collectionList[i].finish, imageURL: _collectionList[i].imageURL, index: i, deleteCallback: () => showDeletedDialog(context, _collectionList[i].key, i),),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               childAspectRatio: 0.8,
@@ -195,10 +276,36 @@ _deleteItem(String itemID, int index) {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            _addItem('Nude Peach', 'Blush', '3CE', 'Powder', 'matte', 'https://i.imgur.com/yVD7d0v.jpg');
+            showCollectionDialog(context);
           },
           tooltip: 'Increment',
           child: Icon(Icons.add)
         ),);
+  }
+}
+
+class SnackBarPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: RaisedButton(
+        onPressed: () {
+          final snackBar = SnackBar(
+            content: Text('Item deleted!'),
+            action: SnackBarAction(
+              label: 'Undo',
+              onPressed: () {
+                // Some code to undo the change.
+              },
+            ),
+          );
+
+          // Find the Scaffold in the widget tree and use
+          // it to show a SnackBar.
+          Scaffold.of(context).showSnackBar(snackBar);
+        },
+        child: Text('Show SnackBar'),
+      ),
+    );
   }
 }

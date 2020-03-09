@@ -28,8 +28,8 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       home: Scaffold(
         appBar: appBarBase(
-        title:'DupeIt'
-    ),
+          title:'DupeIt',
+        ),
         body: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
